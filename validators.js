@@ -2,6 +2,8 @@ angular.module('wizehive.validators', [])
 	.factory('regex', function () {
 		return {
 			ALPHA_NUMERIC: /^[a-z0-9]+$/i,
+			ALPHA: /^[a-z]+$/i,
+			NUMERIC: /^[0-9]+$/,
 			PASSWORD: /(?=.*\d)(?=.*[A-Z])(?=.*[\d]).{8,}/,
 			DATE: /(^(\d{1})?(\d{1})[-.\/](\d{1})?(\d{1})[-.\/](?:(\d{2}))?(\d{2})$)|(^(\d{2})?(\d{2})[-.\/](\d{1})?(\d{1})[-.\/](?:(\d{1}))?(\d{1})$)/,
 			DATE_US: /^(\d{2})[-\/](\d{2})[-\/](\d{4})$/,
@@ -10,7 +12,7 @@ angular.module('wizehive.validators', [])
 			URL: /^(https?|ftp):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/
 		};
 	})
-	.directive('alphaNumeric', ['regex', function (regex) {
+ 	.directive('alphaNumeric', ['regex', function (regex) {
 		return {
 			restrict: 'A',
 			require: 'ngModel',
@@ -21,6 +23,40 @@ angular.module('wizehive.validators', [])
 						return viewValue;
 					} else {
 						ctrl.$setValidity('alphaNumeric', false);
+						return;
+					}
+				});
+			}
+		};
+	}])
+	.directive('alpha', ['regex', function (regex) {
+		return {
+			restrict: 'A',
+			require: 'ngModel',
+			link: function (scope, element, attrs, ctrl) {
+				ctrl.$parsers.unshift(function (viewValue) {
+					if (viewValue === "" || regex.ALPHA.test(viewValue)) {
+						ctrl.$setValidity('alpha', true);
+						return viewValue;
+					} else {
+						ctrl.$setValidity('alpha', false);
+						return;
+					}
+				});
+			}
+		};
+	}])
+	.directive('number', ['regex', function (regex) {
+		return {
+			restrict: 'A',
+			require: 'ngModel',
+			link: function (scope, element, attrs, ctrl) {
+				ctrl.$parsers.unshift(function (viewValue) {
+					if (viewValue === "" || regex.NUMERIC.test(viewValue)) {
+						ctrl.$setValidity('number', true);
+						return viewValue;
+					} else {
+						ctrl.$setValidity('number', false);
 						return;
 					}
 				});
