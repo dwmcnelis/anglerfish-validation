@@ -9,6 +9,7 @@ angular.module('wizehive.validators', [])
 			DATE_US: /^(\d{2})[-\/](\d{2})[-\/](\d{4})$/,
 			ZIPCODE: /(^\d{5}$)|(^\d{5}-\d{4}$)/,
 			CURRENCY_DOLLARS: /^\$?(\d?\d?\d(,\d\d\d)*|\d+)(\.\d\d)?$/,
+			EMAIL: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
 			URL: /^(https?|ftp):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/
 		};
 	})
@@ -158,6 +159,23 @@ angular.module('wizehive.validators', [])
 			}
 		};
 	}])
+	.directive('email', ['regex', function (regex) {
+		return {
+			restrict: 'A',
+			require: 'ngModel',
+			link: function (scope, element, attrs, ctrl) {
+				ctrl.$parsers.unshift(function (viewValue) {
+					if (viewValue === "" || regex.EMAIL.test(viewValue)) {
+						ctrl.$setValidity('email', true);
+						return viewValue;
+					} else {
+						ctrl.$setValidity('email', false);
+						return;
+					}
+				});
+			}
+		};
+	}])
 	.directive('url', ['regex', function (regex) {
 		return {
 			restrict: 'A',
@@ -176,6 +194,60 @@ angular.module('wizehive.validators', [])
 			}
 		};
 	}])
+	.directive('textboxMaxLength', function () {
+		return {
+			restrict: 'A',
+			require: 'ngModel',
+			link: function (scope, element, attrs, ctrl) {
+				var maxLength = parseInt(attrs.texboxMaxLength) || -1;
+				ctrl.$parsers.unshift(function (viewValue) {
+					if (viewValue !== "" && maxLength > -1 && viewValue.length > maxLength) {
+						ctrl.$setValidity('maxlength', false);
+						return;
+					} else {
+						ctrl.$setValidity('maxlength', true);
+						return viewValue;
+					}
+				});
+			}
+		}
+	})
+	.directive('minwordcount', function () {
+		return {
+			restrict: 'A',
+			require: 'ngModel',
+			link: function (scope, element, attrs, ctrl) {
+				var minWords = parseInt(attrs.minwordcount) || -1;
+				ctrl.$parsers.unshift(function (viewValue) {
+					if (viewValue !== "" && minWords > -1 && viewValue.split(" ").length < minWords) {
+						ctrl.$setValidity('minwordcount', false);
+						return;
+					} else {
+						ctrl.$setValidity('minwordcount', true);
+						return viewValue;
+					}
+				});
+			}
+		}
+	})
+	.directive('maxwordcount', function () {
+		return {
+			restrict: 'A',
+			require: 'ngModel',
+			link: function (scope, element, attrs, ctrl) {
+				var maxWords = parseInt(attrs.maxwordcount) || -1;
+				ctrl.$parsers.unshift(function (viewValue) {
+					if (viewValue !== "" && maxWords > -1 && viewValue.split(" ").length > maxWords) {
+						ctrl.$setValidity('maxwordcount', false);
+						return;
+					} else {
+						ctrl.$setValidity('maxwordcount', true);
+						return viewValue;
+					}
+				});
+			}
+		}
+	})
 	.directive('zipcode', ['regex', function (regex) {
 		return {
 			restrict: 'A',
