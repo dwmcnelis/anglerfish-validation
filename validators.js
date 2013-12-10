@@ -13,7 +13,7 @@ angular.module('wizehive.validators', [])
 			URL: /^(https?|ftp):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/
 		};
 	})
- 	.directive('alphaNumeric', ['regex', function (regex) {
+	.directive('alphaNumeric', ['regex', function (regex) {
 		return {
 			restrict: 'A',
 			require: 'ngModel',
@@ -199,7 +199,7 @@ angular.module('wizehive.validators', [])
 			restrict: 'A',
 			require: 'ngModel',
 			link: function (scope, element, attrs, ctrl) {
-				var maxLength = parseInt(attrs.texboxMaxLength) || -1;
+				var maxLength = parseInt(attrs.texboxMaxLength, 10) || -1;
 				ctrl.$parsers.unshift(function (viewValue) {
 					if (viewValue !== "" && maxLength > -1 && viewValue.length > maxLength) {
 						ctrl.$setValidity('maxlength', false);
@@ -210,14 +210,14 @@ angular.module('wizehive.validators', [])
 					}
 				});
 			}
-		}
+		};
 	})
 	.directive('minwordcount', function () {
 		return {
 			restrict: 'A',
 			require: 'ngModel',
 			link: function (scope, element, attrs, ctrl) {
-				var minWords = parseInt(attrs.minwordcount) || -1;
+				var minWords = parseInt(attrs.minwordcount, 10) || -1;
 				ctrl.$parsers.unshift(function (viewValue) {
 					if (viewValue !== "" && minWords > -1 && viewValue.split(" ").length < minWords) {
 						ctrl.$setValidity('minwordcount', false);
@@ -228,14 +228,14 @@ angular.module('wizehive.validators', [])
 					}
 				});
 			}
-		}
+		};
 	})
 	.directive('maxwordcount', function () {
 		return {
 			restrict: 'A',
 			require: 'ngModel',
 			link: function (scope, element, attrs, ctrl) {
-				var maxWords = parseInt(attrs.maxwordcount) || -1;
+				var maxWords = parseInt(attrs.maxwordcount, 10) || -1;
 				ctrl.$parsers.unshift(function (viewValue) {
 					if (viewValue !== "" && maxWords > -1 && viewValue.split(" ").length > maxWords) {
 						ctrl.$setValidity('maxwordcount', false);
@@ -246,7 +246,7 @@ angular.module('wizehive.validators', [])
 					}
 				});
 			}
-		}
+		};
 	})
 	.directive('zipcode', ['regex', function (regex) {
 		return {
