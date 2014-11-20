@@ -13,7 +13,7 @@ angular.module('wizehive.validators', [])
 			URL: /^(https?|ftp):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/
 		};
 	})
-	.directive('alphaNumeric', ['regex', function (regex) {
+	.directive('znValidateAlphaNumeric', ['regex', function (regex) {
 		return {
 			restrict: 'A',
 			require: 'ngModel',
@@ -30,7 +30,7 @@ angular.module('wizehive.validators', [])
 			}
 		};
 	}])
-	.directive('alpha', ['regex', function (regex) {
+	.directive('znValidateAlpha', ['regex', function (regex) {
 		return {
 			restrict: 'A',
 			require: 'ngModel',
@@ -47,7 +47,7 @@ angular.module('wizehive.validators', [])
 			}
 		};
 	}])
-	.directive('number', ['regex', function (regex) {
+	.directive('znValidateNumber', ['regex', function (regex) {
 		return {
 			restrict: 'A',
 			require: 'ngModel',
@@ -64,16 +64,16 @@ angular.module('wizehive.validators', [])
 			}
 		};
 	}])
-	.directive('currency', ['regex', function (regex) {
+	.directive('znValidateCurrency', ['regex', function (regex) {
 		return {
 			restrict: 'A',
 			require: 'ngModel',
 			link: function (scope, element, attrs, ctrl) {
-				//if currency attribute exists
-				if (attrs.currency) {
+				//if znValidateCurrency attribute exists
+				if (attrs.znValidateCurrency) {
 
 					//fetch currency value
-					var currency = attrs.currency;
+					var currency = attrs.znValidateCurrency;
 
 					ctrl.$parsers.unshift(function (viewValue) {
 
@@ -106,7 +106,7 @@ angular.module('wizehive.validators', [])
 			}
 		};
 	}])
-	.directive('date', ['regex', function (regex) {
+	.directive('znValidateDate', ['regex', function (regex) {
 		return {
 			restrict: 'A',
 			require: 'ngModel',
@@ -124,7 +124,7 @@ angular.module('wizehive.validators', [])
 			}
 		};
 	}])
-	.directive('dateUs', ['regex', function (regex) {
+	.directive('znValidateDateUs', ['regex', function (regex) {
 		return {
 			restrict: 'A',
 			require: 'ngModel',
@@ -142,7 +142,7 @@ angular.module('wizehive.validators', [])
 			}
 		};
 	}])
-	.directive('password', ['regex', function (regex) {
+	.directive('znValidatePassword', ['regex', function (regex) {
 		return {
 			restrict: 'A',
 			require: 'ngModel',
@@ -159,7 +159,7 @@ angular.module('wizehive.validators', [])
 			}
 		};
 	}])
-	.directive('email', ['regex', function (regex) {
+	.directive('znValidateEmail', ['regex', function (regex) {
 		return {
 			restrict: 'A',
 			require: 'ngModel',
@@ -176,7 +176,7 @@ angular.module('wizehive.validators', [])
 			}
 		};
 	}])
-	.directive('url', ['regex', function (regex) {
+	.directive('znValidateUrl', ['regex', function (regex) {
 		return {
 			restrict: 'A',
 			require: 'ngModel',
@@ -194,7 +194,7 @@ angular.module('wizehive.validators', [])
 			}
 		};
 	}])
-	.directive('textboxMaxLength', function () {
+	.directive('znValidateTextboxMaxLength', function () {
 		return {
 			restrict: 'A',
 			require: 'ngModel',
@@ -212,7 +212,7 @@ angular.module('wizehive.validators', [])
 			}
 		};
 	})
-	.directive('minwordcount', function () {
+	.directive('znValidateMinwordcount', function () {
 		return {
 			restrict: 'A',
 			require: 'ngModel',
@@ -230,7 +230,7 @@ angular.module('wizehive.validators', [])
 			}
 		};
 	})
-	.directive('maxwordcount', function () {
+	.directive('znValidateMaxwordcount', function () {
 		return {
 			restrict: 'A',
 			require: 'ngModel',
@@ -248,7 +248,7 @@ angular.module('wizehive.validators', [])
 			}
 		};
 	})
-	.directive('zipcode', ['regex', function (regex) {
+	.directive('znValidateZipcode', ['regex', function (regex) {
 		return {
 			restrict: 'A',
 			require: 'ngModel',
@@ -265,4 +265,44 @@ angular.module('wizehive.validators', [])
 				});
 			}
 		};
+	}])
+	/**
+	 * 
+	 * znValidateUnique - set unique validation on element blur using a checker function available on scope
+	 * Pass function name to this attribute, e.g. <input zn-validate-unique="isUnique" />
+	 * Function must return promise that resolves if unique, and rejects if not unique
+	 * 
+	 * @author	Paul W. Smith <paul@wizehive.com>
+	 * @since	0.5.51
+	 */
+	.directive('znValidateUnique', [function() {
+		return {
+			restrict: 'A',
+			require: 'ngModel',
+			link: function(scope, element, attrs, ctrl) {
+				// zn-validate-unique="nameOfUniqueCheckingFunctionOnMyScope"
+				var uniqueFunc = scope[attrs.znValidateUnique];
+				if (typeof uniqueFunc !== 'function') {
+					throw new Error('znValidateUnique must be passed the name of a valid scope function');
+				}
+				var lastValue;
+				
+				element.on('blur', function() {
+					if (ctrl.$viewValue === lastValue) {
+						return;
+					} else {
+						// Reset validation until checking with server
+						ctrl.$setValidity('unique', true);
+						lastValue = ctrl.$viewValue;
+					}
+					
+					uniqueFunc(attrs.name, ctrl.$viewValue).then(function() {
+						ctrl.$setValidity('unique', true);
+					}, function() {
+						ctrl.$setValidity('unique', false);
+					});
+				});
+			}
+		};
 	}]);
+
