@@ -114,10 +114,10 @@ angular.module('wizehive.validators', [])
 				ctrl.$parsers.unshift(function (viewValue) {
 					//check if value is empty or match the regex pattern
 					if (viewValue === "" || regex.DATE.test(viewValue)) {
-						ctrl.$setValidity('url', true);
+						ctrl.$setValidity('date', true);
 						return viewValue;
 					} else {
-						ctrl.$setValidity('url', false);
+						ctrl.$setValidity('date', false);
 						return;
 					}
 				});
