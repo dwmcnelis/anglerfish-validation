@@ -199,7 +199,7 @@ angular.module('wizehive.validators', [])
 			restrict: 'A',
 			require: 'ngModel',
 			link: function (scope, element, attrs, ctrl) {
-				var maxLength = parseInt(attrs.texboxMaxLength, 10) || -1;
+				var maxLength = parseInt(attrs.znValidateTextboxMaxLength, 10) || -1;
 				ctrl.$parsers.unshift(function (viewValue) {
 					if (viewValue !== "" && maxLength > -1 && viewValue.length > maxLength) {
 						ctrl.$setValidity('maxlength', false);
@@ -217,9 +217,9 @@ angular.module('wizehive.validators', [])
 			restrict: 'A',
 			require: 'ngModel',
 			link: function (scope, element, attrs, ctrl) {
-				var minWords = parseInt(attrs.minwordcount, 10) || -1;
+				var minWords = parseInt(attrs.znValidateMinwordcount, 10) || -1;
 				ctrl.$parsers.unshift(function (viewValue) {
-					if (viewValue !== "" && minWords > -1 && viewValue.split(" ").length < minWords) {
+					if (viewValue && viewValue !== "" && minWords > -1 && viewValue.split(" ").length < minWords) {
 						ctrl.$setValidity('minwordcount', false);
 						return;
 					} else {
@@ -235,9 +235,9 @@ angular.module('wizehive.validators', [])
 			restrict: 'A',
 			require: 'ngModel',
 			link: function (scope, element, attrs, ctrl) {
-				var maxWords = parseInt(attrs.maxwordcount, 10) || -1;
+				var maxWords = parseInt(attrs.znValidateMaxwordcount, 10) || -1;
 				ctrl.$parsers.unshift(function (viewValue) {
-					if (viewValue !== "" && maxWords > -1 && viewValue.split(" ").length > maxWords) {
+					if (viewValue && viewValue !== "" && maxWords > -1 && viewValue.split(" ").length > maxWords) {
 						ctrl.$setValidity('maxwordcount', false);
 						return;
 					} else {
@@ -305,4 +305,5 @@ angular.module('wizehive.validators', [])
 			}
 		};
 	}]);
+
 
