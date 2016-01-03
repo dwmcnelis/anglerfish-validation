@@ -304,6 +304,34 @@ angular.module('wizehive.validators', [])
 				});
 			}
 		};
+	}])
+	.directive('znValidateMember', [function() {
+		return {
+			restrict: 'A',
+			require: 'ngModel',
+			link: function(scope, element, attrs, ctrl) {
+				
+				if (!ctrl) return;
+				
+				var members = scope[attrs.znValidateMember] || false;
+				if (!members) {
+					throw new Error('znValidateMember members array not found/set');
+				}
+
+				scope.$watch(ctrl.$viewValue, check);
+				ctrl.$viewChangeListeners.push(check);
+      			
+      			function check() {
+      				if (ctrl.$isEmpty(ctrl.$viewValue)) return;
+      				var valid = false;
+      				angular.forEach(members, function(member) {
+      					if (ctrl.$viewValue === member.id) {
+      						valid = true;
+      					}
+      				});
+      				ctrl.$setValidity('member', valid);
+      			};
+
+			}
+		};
 	}]);
-
-
