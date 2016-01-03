@@ -330,7 +330,7 @@ angular.module('wizehive.validators', [])
       					}
       				});
       				ctrl.$setValidity('member', valid);
-      			};
+      			}
 
 			}
 		};
