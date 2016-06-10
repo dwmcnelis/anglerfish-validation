@@ -275,7 +275,7 @@ angular.module('wizehive.validators', [])
 	 * @author	Paul W. Smith <paul@wizehive.com>
 	 * @since	0.5.51
 	 */
-	.directive('znValidateUnique', [function() {
+	.directive('znValidateUnique', ['$timeout', function($timeout) {
 		return {
 			restrict: 'A',
 			require: 'ngModel',
@@ -287,7 +287,7 @@ angular.module('wizehive.validators', [])
 				}
 				var lastValue;
 				
-				element.on('blur', function() {
+				function checkUnique(init) {
 					if (ctrl.$viewValue === lastValue) {
 						return;
 					} else {
@@ -296,12 +296,20 @@ angular.module('wizehive.validators', [])
 						lastValue = ctrl.$viewValue;
 					}
 					
-					uniqueFunc(attrs.name, ctrl.$viewValue).then(function() {
+					uniqueFunc(attrs.name, init).then(function() {
 						ctrl.$setValidity('unique', true);
 					}, function() {
 						ctrl.$setValidity('unique', false);
 					});
-				});
+				}
+				
+				// Initial Check if Value is Set - Wait for Digest
+				$timeout(function() {
+					return checkUnique(true);
+				}, 0);
+				
+				// Check Value Uniqueness on Blur
+				element.on('blur', checkUnique);
 			}
 		};
 	}])
