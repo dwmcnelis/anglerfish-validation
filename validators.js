@@ -309,7 +309,9 @@ angular.module('wizehive.validators', [])
 				}, 0);
 				
 				// Check Value Uniqueness on Blur
-				element.on('blur', checkUnique);
+				element.on('blur', function() {
+					return checkUnique(false);
+				});
 			}
 		};
 	}])
