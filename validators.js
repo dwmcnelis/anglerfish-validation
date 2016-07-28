@@ -315,6 +315,39 @@ angular.module('wizehive.validators', [])
 			}
 		};
 	}])
+	/**
+	 * znValidateChoices
+	 * 
+	 * @author	Anna Parks <anna@wizehive.com>
+	 * @since	0.5.80
+	 */
+	.directive('znValidateChoices', [function () {
+		return {
+			restrict: 'A',
+			require: 'ngModel',
+			link: function (scope, element, attrs, ctrl) {
+				if (!ctrl) return;
+				
+				var choices = scope.$eval(attrs.znValidateChoices) || false;
+
+				scope.$watch(ctrl.$viewValue, check);
+				ctrl.$viewChangeListeners.push(check);
+
+				function check() {
+					if (ctrl.$isEmpty(ctrl.$viewValue)) return;
+					var valid = false;
+
+					angular.forEach(choices, function(label, value) {
+						if (ctrl.$viewValue === value) {
+							valid = true;
+						}
+					});
+					ctrl.$setValidity('choices', valid);
+				}
+
+			}
+		};
+	}])
 	.directive('znValidateMember', [function() {
 		return {
 			restrict: 'A',
