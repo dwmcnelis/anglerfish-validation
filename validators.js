@@ -330,18 +330,32 @@ angular.module('wizehive.validators', [])
 				
 				var choices = scope.$eval(attrs.znValidateChoices) || false;
 
-				scope.$watch(ctrl.$viewValue, check);
+				scope.$watch(attrs.ngModel, check);
 				ctrl.$viewChangeListeners.push(check);
 
 				function check() {
-					if (ctrl.$isEmpty(ctrl.$viewValue)) return;
-					var valid = false;
+					if (ctrl.$isEmpty(ctrl.$modelValue)) return;
+					var valid = true,
+						modelValue = ctrl.$modelValue,
+						values = [];
+
 
 					angular.forEach(choices, function(label, value) {
-						if (ctrl.$viewValue === value) {
-							valid = true;
-						}
+						values.push(value);
 					});
+
+					if (!angular.isArray(modelValue)) {
+						modelValue = [modelValue];
+					}
+
+					angular.forEach(modelValue, function(value) {
+
+						if (values.indexOf(value) == -1) {
+							valid = false;
+						}
+
+					});
+
 					ctrl.$setValidity('choices', valid);
 				}
 
