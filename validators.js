@@ -18,14 +18,27 @@ angular.module('wizehive.validators', [])
 			restrict: 'A',
 			require: 'ngModel',
 			link: function (scope, element, attrs, ctrl) {
-				ctrl.$parsers.unshift(function (viewValue) {
-					if (viewValue === "" || regex.ALPHA_NUMERIC.test(viewValue)) {
+
+				var validator = function(viewValue) {
+					if (!viewValue || regex.ALPHA_NUMERIC.test(viewValue)) {
 						ctrl.$setValidity('alphaNumeric', true);
 						return viewValue;
 					} else {
 						ctrl.$setValidity('alphaNumeric', false);
 						return;
 					}
+				};
+
+				ctrl.$parsers.unshift(validator);
+
+				// Initial Check if Value is Set
+				unwatch = scope.$watch(attrs.ngModel, function(model) {
+
+					if (model !== undefined) {
+						validator(ctrl.$viewValue);
+						unwatch();
+					}
+
 				});
 			}
 		};
@@ -35,14 +48,27 @@ angular.module('wizehive.validators', [])
 			restrict: 'A',
 			require: 'ngModel',
 			link: function (scope, element, attrs, ctrl) {
-				ctrl.$parsers.unshift(function (viewValue) {
-					if (viewValue === "" || regex.ALPHA.test(viewValue)) {
+
+				var validator = function(viewValue) {
+					if (!viewValue || regex.ALPHA.test(viewValue)) {
 						ctrl.$setValidity('alpha', true);
 						return viewValue;
 					} else {
 						ctrl.$setValidity('alpha', false);
 						return;
 					}
+				};
+
+				ctrl.$parsers.unshift(validator);
+
+				// Initial Check if Value is Set
+				unwatch = scope.$watch(attrs.ngModel, function(model) {
+
+					if (model !== undefined) {
+						validator(ctrl.$viewValue);
+						unwatch();
+					}
+
 				});
 			}
 		};
@@ -52,14 +78,27 @@ angular.module('wizehive.validators', [])
 			restrict: 'A',
 			require: 'ngModel',
 			link: function (scope, element, attrs, ctrl) {
-				ctrl.$parsers.unshift(function (viewValue) {
-					if (viewValue === "" || regex.NUMERIC.test(viewValue)) {
+
+				var validator = function(viewValue) {
+					if (!viewValue || regex.NUMERIC.test(viewValue)) {
 						ctrl.$setValidity('number', true);
 						return viewValue;
 					} else {
 						ctrl.$setValidity('number', false);
 						return;
 					}
+				};
+
+				ctrl.$parsers.unshift(validator);
+
+				// Initial Check if Value is Set
+				unwatch = scope.$watch(attrs.ngModel, function(model) {
+
+					if (model !== undefined) {
+						validator(ctrl.$viewValue);
+						unwatch();
+					}
+
 				});
 			}
 		};
@@ -75,7 +114,7 @@ angular.module('wizehive.validators', [])
 					//fetch currency value
 					var currency = attrs.znValidateCurrency;
 
-					ctrl.$parsers.unshift(function (viewValue) {
+					var validator = function (viewValue) {
 
 						var regexToMatch = '';
 
@@ -97,6 +136,18 @@ angular.module('wizehive.validators', [])
 							ctrl.$setValidity('currency', false);
 							return;
 						}
+					};
+
+					ctrl.$parsers.unshift(validator);
+
+					// Initial Check if Value is Set
+					unwatch = scope.$watch(attrs.ngModel, function(model) {
+
+						if (model !== undefined) {
+							validator(ctrl.$viewValue);
+							unwatch();
+						}
+
 					});
 				}
 				else {
@@ -111,15 +162,28 @@ angular.module('wizehive.validators', [])
 			restrict: 'A',
 			require: 'ngModel',
 			link: function (scope, element, attrs, ctrl) {
-				ctrl.$parsers.unshift(function (viewValue) {
+
+				var validator = function(viewValue) {
 					//check if value is empty or match the regex pattern
-					if (viewValue === "" || regex.DATE.test(viewValue)) {
+					if (!viewValue || regex.DATE.test(viewValue)) {
 						ctrl.$setValidity('date', true);
 						return viewValue;
 					} else {
 						ctrl.$setValidity('date', false);
 						return;
 					}
+				};
+
+				ctrl.$parsers.unshift(validator);
+
+				// Initial Check if Value is Set
+				unwatch = scope.$watch(attrs.ngModel, function(model) {
+
+					if (model !== undefined) {
+						validator(ctrl.$viewValue);
+						unwatch();
+					}
+
 				});
 			}
 		};
@@ -129,15 +193,28 @@ angular.module('wizehive.validators', [])
 			restrict: 'A',
 			require: 'ngModel',
 			link: function (scope, element, attrs, ctrl) {
-				ctrl.$parsers.unshift(function (viewValue) {
+
+				var validator = function(viewValue) {
 					//check if value is empty or match the regex pattern
-					if (viewValue === "" || regex.DATE_US.test(viewValue)) {
+					if (!viewValue || regex.DATE_US.test(viewValue)) {
 						ctrl.$setValidity('dateUs', true);
 						return viewValue;
 					} else {
 						ctrl.$setValidity('dateUs', false);
 						return;
 					}
+				};
+
+				ctrl.$parsers.unshift(validator);
+
+				// Initial Check if Value is Set
+				unwatch = scope.$watch(attrs.ngModel, function(model) {
+
+					if (model !== undefined) {
+						validator(ctrl.$viewValue);
+						unwatch();
+					}
+
 				});
 			}
 		};
@@ -147,14 +224,27 @@ angular.module('wizehive.validators', [])
 			restrict: 'A',
 			require: 'ngModel',
 			link: function (scope, element, attrs, ctrl) {
-				ctrl.$parsers.unshift(function (viewValue) {
-					if (viewValue === "" || regex.PASSWORD.test(viewValue)) {
+
+				var validator = function(viewValue) {
+					if (!viewValue || regex.PASSWORD.test(viewValue)) {
 						ctrl.$setValidity('password', true);
 						return viewValue;
 					} else {
 						ctrl.$setValidity('password', false);
 						return;
 					}
+				};
+
+				ctrl.$parsers.unshift(validator);
+
+				// Initial Check if Value is Set
+				unwatch = scope.$watch(attrs.ngModel, function(model) {
+
+					if (model !== undefined) {
+						validator(ctrl.$viewValue);
+						unwatch();
+					}
+
 				});
 			}
 		};
@@ -164,14 +254,27 @@ angular.module('wizehive.validators', [])
 			restrict: 'A',
 			require: 'ngModel',
 			link: function (scope, element, attrs, ctrl) {
-				ctrl.$parsers.unshift(function (viewValue) {
-					if (viewValue === "" || regex.EMAIL.test(viewValue)) {
+
+				var validator = function(viewValue) {
+					if (!viewValue || regex.EMAIL.test(viewValue)) {
 						ctrl.$setValidity('email', true);
 						return viewValue;
 					} else {
 						ctrl.$setValidity('email', false);
 						return;
 					}
+				};
+
+				ctrl.$parsers.unshift(validator);
+
+				// Initial Check if Value is Set
+				unwatch = scope.$watch(attrs.ngModel, function(model) {
+
+					if (model !== undefined) {
+						validator(ctrl.$viewValue);
+						unwatch();
+					}
+
 				});
 			}
 		};
@@ -181,15 +284,28 @@ angular.module('wizehive.validators', [])
 			restrict: 'A',
 			require: 'ngModel',
 			link: function (scope, element, attrs, ctrl) {
-				ctrl.$parsers.unshift(function (viewValue) {
+
+				var validator = function (viewValue) {
 					//check if value is empty or match the regex pattern
-					if (viewValue === "" || regex.URL.test(viewValue)) {
+					if (!viewValue || regex.URL.test(viewValue)) {
 						ctrl.$setValidity('url', true);
 						return viewValue;
 					} else {
 						ctrl.$setValidity('url', false);
 						return;
 					}
+				};
+
+				ctrl.$parsers.unshift(validator);
+
+				// Initial Check if Value is Set
+				unwatch = scope.$watch(attrs.ngModel, function(model) {
+
+					if (model !== undefined) {
+						validator(ctrl.$viewValue);
+						unwatch();
+					}
+
 				});
 			}
 		};
@@ -200,14 +316,27 @@ angular.module('wizehive.validators', [])
 			require: 'ngModel',
 			link: function (scope, element, attrs, ctrl) {
 				var maxLength = parseInt(attrs.znValidateTextboxMaxLength, 10) || -1;
-				ctrl.$parsers.unshift(function (viewValue) {
-					if (viewValue !== "" && maxLength > -1 && viewValue.length > maxLength) {
+
+				var validator = function (viewValue) {
+					if (viewValue && maxLength > -1 && viewValue.length > maxLength) {
 						ctrl.$setValidity('maxlength', false);
 						return;
 					} else {
 						ctrl.$setValidity('maxlength', true);
 						return viewValue;
 					}
+				};
+
+				ctrl.$parsers.unshift(validator);
+
+				// Initial Check if Value is Set
+				unwatch = scope.$watch(attrs.ngModel, function(model) {
+
+					if (model !== undefined) {
+						validator(ctrl.$viewValue);
+						unwatch();
+					}
+
 				});
 			}
 		};
@@ -218,15 +347,29 @@ angular.module('wizehive.validators', [])
 			require: 'ngModel',
 			link: function (scope, element, attrs, ctrl) {
 				var minWords = parseInt(attrs.znValidateMinwordcount, 10) || -1;
-				ctrl.$parsers.unshift(function (viewValue) {
-					if (viewValue && viewValue !== "" && minWords > -1 && viewValue.split(" ").length < minWords) {
+
+				var validator = function (viewValue) {
+					if (viewValue && minWords > -1 && viewValue.split(" ").length < minWords) {
 						ctrl.$setValidity('minwordcount', false);
 						return;
 					} else {
 						ctrl.$setValidity('minwordcount', true);
 						return viewValue;
 					}
+				};
+
+				ctrl.$parsers.unshift(validator);
+
+				// Initial Check if Value is Set
+				unwatch = scope.$watch(attrs.ngModel, function(model) {
+
+					if (model !== undefined) {
+						validator(ctrl.$viewValue);
+						unwatch();
+					}
+
 				});
+
 			}
 		};
 	})
@@ -236,14 +379,27 @@ angular.module('wizehive.validators', [])
 			require: 'ngModel',
 			link: function (scope, element, attrs, ctrl) {
 				var maxWords = parseInt(attrs.znValidateMaxwordcount, 10) || -1;
-				ctrl.$parsers.unshift(function (viewValue) {
-					if (viewValue && viewValue !== "" && maxWords > -1 && viewValue.split(" ").length > maxWords) {
+
+				var validator = function(viewValue) {
+					if (viewValue && maxWords > -1 && viewValue.split(" ").length > maxWords) {
 						ctrl.$setValidity('maxwordcount', false);
 						return;
 					} else {
 						ctrl.$setValidity('maxwordcount', true);
 						return viewValue;
 					}
+				};
+
+				ctrl.$parsers.unshift(validator);
+
+				// Initial Check if Value is Set - Wait for Digest
+				unwatch = scope.$watch(attrs.ngModel, function(model) {
+
+					if (model !== undefined) {
+						validator(ctrl.$viewValue);
+						unwatch();
+					}
+
 				});
 			}
 		};
@@ -253,15 +409,28 @@ angular.module('wizehive.validators', [])
 			restrict: 'A',
 			require: 'ngModel',
 			link: function (scope, element, attrs, ctrl) {
-				ctrl.$parsers.unshift(function (viewValue) {
+
+				var validator = function(viewValue) {
 					//check if value is empty or match the regex pattern
-					if (viewValue === "" || regex.ZIPCODE.test(viewValue)) {
+					if (!viewValue || regex.ZIPCODE.test(viewValue)) {
 						ctrl.$setValidity('zipcode', true);
 						return viewValue;
 					} else {
 						ctrl.$setValidity('zipcode', false);
 						return;
 					}
+				};
+
+				ctrl.$parsers.unshift(validator);
+
+				// Initial Check if Value is Set - Wait for Digest
+				unwatch = scope.$watch(attrs.ngModel, function(model) {
+
+					if (model !== undefined) {
+						validator(ctrl.$viewValue);
+						unwatch();
+					}
+
 				});
 			}
 		};
@@ -377,17 +546,17 @@ angular.module('wizehive.validators', [])
 
 				scope.$watch(ctrl.$viewValue, check);
 				ctrl.$viewChangeListeners.push(check);
-      			
-      			function check() {
-      				if (ctrl.$isEmpty(ctrl.$viewValue)) return;
-      				var valid = false;
-      				angular.forEach(members, function(member) {
-      					if (ctrl.$viewValue === member.id) {
-      						valid = true;
-      					}
-      				});
-      				ctrl.$setValidity('member', valid);
-      			}
+				
+				function check() {
+					if (ctrl.$isEmpty(ctrl.$viewValue)) return;
+					var valid = false;
+					angular.forEach(members, function(member) {
+						if (ctrl.$viewValue === member.id) {
+							valid = true;
+						}
+					});
+					ctrl.$setValidity('member', valid);
+				}
 
 			}
 		};
