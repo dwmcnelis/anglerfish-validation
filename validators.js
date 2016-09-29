@@ -103,6 +103,86 @@ angular.module('wizehive.validators', [])
 			}
 		};
 	}])
+	.directive('znValidateMinNumber', [function() {
+		return {
+			restrict: 'A',
+			require: 'ngModel',
+			link: function (scope, element, attrs, ctrl) {
+
+				var validator = function(viewValue) {
+
+					var minNumber = attrs.znValidateMinNumber,
+						bn;
+
+					try {
+						bn = new BigNumber(viewValue);
+					} catch (err) {
+
+					}
+
+					if (!viewValue || !bn || bn.greaterThanOrEqualTo(minNumber)) {
+						ctrl.$setValidity('minNumber', true);
+						return viewValue;
+					} else {
+						ctrl.$setValidity('minNumber', false);
+						return;
+					}
+				};
+
+				ctrl.$parsers.unshift(validator);
+
+				// Initial Check if Value is Set
+				unwatch = scope.$watch(attrs.ngModel, function(model) {
+
+					if (model !== undefined) {
+						validator(ctrl.$viewValue);
+						unwatch();
+					}
+
+				});
+			}
+		};
+	}])
+	.directive('znValidateMaxNumber', [function() {
+		return {
+			restrict: 'A',
+			require: 'ngModel',
+			link: function (scope, element, attrs, ctrl) {
+
+				var validator = function(viewValue) {
+
+					var maxNumber = attrs.znValidateMaxNumber,
+						bn;
+
+					try {
+						bn = new BigNumber(viewValue);
+					} catch (err) {
+
+					}
+
+					if (!viewValue || !bn || bn.lessThanOrEqualTo(maxNumber)) {
+						ctrl.$setValidity('maxNumber', true);
+						return viewValue;
+					} else {
+						ctrl.$setValidity('maxNumber', false);
+						return;
+					}
+				};
+
+				ctrl.$parsers.unshift(validator);
+
+				// Initial Check if Value is Set
+				unwatch = scope.$watch(attrs.ngModel, function(model) {
+
+					if (model !== undefined) {
+						validator(ctrl.$viewValue);
+						unwatch();
+					}
+
+				});
+			}
+		};
+	}])
 	.directive('znValidateCurrency', ['regex', function (regex) {
 		return {
 			restrict: 'A',
