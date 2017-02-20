@@ -422,7 +422,7 @@ angular.module('wizehive.validators', [])
 			}
 		};
 	})
-	.directive('znValidateMinwordcount', function () {
+	.directive('znValidateMinwordcount', ['regex', function (regex) {
 		return {
 			restrict: 'A',
 			require: 'ngModel',
@@ -459,8 +459,8 @@ angular.module('wizehive.validators', [])
 
 			}
 		};
-	})
-	.directive('znValidateMaxwordcount', function () {
+	}])
+	.directive('znValidateMaxwordcount', ['regex', function (regex) {
 		return {
 			restrict: 'A',
 			require: 'ngModel',
@@ -496,7 +496,7 @@ angular.module('wizehive.validators', [])
 				});
 			}
 		};
-	})
+	}])
 	.directive('znValidateZipcode', ['regex', function (regex) {
 		return {
 			restrict: 'A',
