@@ -431,7 +431,7 @@ angular.module('wizehive.validators', [])
 
 				var validator = function (viewValue) {
   					viewValue = viewValue.trim();
-					var numWords = !viewValue || 0 === viewValue.length ? 0 : viewValue.match(regex.WHITESPACE).length
+					var numWords = !viewValue || 0 === viewValue.length ? 0 : viewValue.match(regex.WHITESPACE).length;
 					if (viewValue && minWords > -1 && numWords < minWords) {
 						ctrl.$setValidity('minwordcount', false);
 						return;
@@ -465,7 +465,7 @@ angular.module('wizehive.validators', [])
 
 				var validator = function(viewValue) {
   					viewValue = viewValue.trim();
-					var numWords = !viewValue || 0 === viewValue.length ? 0 : viewValue.match(regex.WHITESPACE).length
+					var numWords = !viewValue || 0 === viewValue.length ? 0 : viewValue.match(regex.WHITESPACE).length;
 					if (viewValue && maxWords > -1 && numWords > maxWords) {
 						ctrl.$setValidity('maxwordcount', false);
 						return;
